@@ -1,9 +1,4 @@
 ---
-- name: Set Facts
-  set_fact:
-    '{{ munkitools_repo_rul | default('') }}'
-    '{{ munkitools_existing_repo | default('no') }}'
-
 - name: Download Latest Munki Installer
   get_url:
     url: https://github.com/munki/munki/releases/download/v4.1.1/munkitools-4.1.1.3931.pkg
