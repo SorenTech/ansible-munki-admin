@@ -8,7 +8,5 @@ Repository to set up the munki admin tools on a Mac that will be used to adminis
 - Optionally: Set up a new Munki Repository on the admin machine
 
 ## Variables:
-`
-munkitools_existing_repo: default no -> creation of new (local) repo
-munkitools_repo_location
-`
+- munkitools_existing_repo: default no -> creation of new (local) repo
+- munkitools_repo_url: default "" (empty)
