@@ -27,3 +27,8 @@
        - manifests
        - pkgs
        - pkgsinfo
+
+  - name: Start Apache
+    command:
+      cmd: apachectl start
+      become: yes
