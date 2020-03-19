@@ -13,14 +13,14 @@
   git_clone:
     src: '{{ munkitools_repo_url }}'
     dest: '/Users/Shared/munki_repo'
-    when: {{ munkitools_existing_repo = yes }}
+    when: munkitools_existing_repo
 
 - name: Create New Local Repo
   file:
      path: '/Users/Shared/munki_repo/{{ item }}'
      state: directory
      mode: a+rX
-     when: {{ munkitools_existing_repo = no }}
+     when: not munkitools_existing_repo
    loop:
        - catalogs
        - icons
