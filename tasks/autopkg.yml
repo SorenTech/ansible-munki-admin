@@ -1,0 +1,13 @@
+--
+
+- name: Set Munki Repo
+  osx_defaults:
+    domain: com.github.autopkg
+    key: MUNKI_REPO
+    value: "{{ munki_repo_path | default /Users/Shared/munki_repo }}"
+- name: Add autopkg repos
+  command: autopkg repo add {{ item }}
+  loop: "{{ autopkg_repo_list }}"
+- name: Add packages
+  command: autopkg run {{ item }}
+  loop: "{{ autopkg_recipe_list }}"
