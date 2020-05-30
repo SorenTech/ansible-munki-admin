@@ -22,12 +22,3 @@
   file:
     path: ~/Downloads/autopkg-latest.pkg
     state: absent
-
-- name: Install Munki using AutoPkg
-  command: autopkg install munkitools.install
-  become: yes
-
-- name: Clone Existing Munki Repo
-
-- name: Set-up New Munki Repo
-
