@@ -22,3 +22,6 @@
   file:
     path: ~/Downloads/autopkg-latest.pkg
     state: absent
+
+- name: Add base repo
+  command: autopkg repo-add recipes
