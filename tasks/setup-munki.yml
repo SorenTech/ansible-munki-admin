@@ -1,4 +1,8 @@
 ---
+- name: Install Munkitools
+  command: autopkg install munki.install
+  become: yes
+
 - name: Clone Repo
   git_clone:
     src: '{{ munkitools_repo_url }}'
@@ -18,7 +22,7 @@
        - pkgs
        - pkgsinfo
 
-  - name: Start Apache
-    command:
-      cmd: apachectl start
-      become: yes
+- name: Start Apache
+  command:
+    cmd: apachectl start
+    become: yes
