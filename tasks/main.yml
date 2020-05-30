@@ -1,14 +1,4 @@
 ---
-- name: Download Latest Munki Installer
-  get_url:
-    url: https://github.com/munki/munki/releases/download/v4.1.1/munkitools-4.1.1.3931.pkg
-    dest: ~/Downloads
-
-- name: Install Munki Tools
-  command:
-    cmd: installer -pkg ~/Downloads/munkitools-4.1.1.3931.pkg -target /
-    become: yes
-
 - name: Clone Repo
   git_clone:
     src: '{{ munkitools_repo_url }}'
