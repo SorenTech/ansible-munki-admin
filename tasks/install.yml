@@ -1,0 +1,40 @@
+--
+
+- name: Get Pkg Release Info
+  get_url:
+    url: https://api.github.com/repos/{{ item.path }}/releases/latest
+    register: release_info_{{ item.name }}
+  loop:
+    - name: autopkg
+      path: autopkg/autopkg
+    - name: munki
+      path: munki/munki
+
+- set_fact:
+    release_json_{{ item }}: "{{ loopkup('vars', 'release_info_' + item) | from_json }}"
+  loop:
+    - autopkg
+    - munki
+
+- name: Download Pkg Release
+  get_url:
+    url: "{{ lookup('vars', 'release_json_' + item).assetts.browser_download_url }}"
+    dest: ~/Downloads/{{ item }}-latest.pkg
+  loop:
+    - autopkg
+    - munki
+
+- name: Install Pkg
+  command: installer -pkg "~/Downloads/{{ item }}-latest.pkg" -target /
+  become: yes
+  loop:
+    - autopkg
+    - munki
+
+- name: Cleanup Downloads
+  file:
+    path: ~/Downloads/{{ item }}-latest.pkg
+    state: absent
+  loop:
+    - autopkg
+    - munki
