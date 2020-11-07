@@ -1,0 +1,6 @@
+- name: Install pyopenssl to add the cryptography module required by AutoPKG
+  pip:
+    name: pyopenssl
+    extra_args: -I --user
+    executable: pip3
+  when: munki_admin = true
