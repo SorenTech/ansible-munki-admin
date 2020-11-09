@@ -1,4 +1,12 @@
 ---
-munkitools_existing_repo: no
 
+user_home: "{{ lookup('env', 'HOME') }}"
+munkitools_existing_repo: no
 munkitools_repo_url: ""
+munki_repo_loc: "/Users/Shared/munki_repo"
+munki_admin_user: "{{ lookup('env', 'USR') }}"
+munki_editor: "emacs"
+munki_default_catalog: "Production"
+autopkg_repos: "recipes"
+autopkg_packages: "Firefox.munki"
+
