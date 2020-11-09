@@ -32,3 +32,23 @@
     - manifests/.miac
     - pkgs/.miac
     -pkgsinfo/.miac
+
+- name: Set Munki System Settings
+  community.general.osx_defaults:
+    domain: com.googlecode.munki.munkiimport
+    key: "{{ item.key }}"
+    type: string
+    value: "{{ item.value }}"
+  with-items:
+    - editor:
+        key: "editor"
+        value: "{{ munki_editor }}"
+    - repo_path:
+        key: "repo_path"
+        value: "{{ munki_repo_loc }}"
+    - pkginfo_extension:
+        key: "pkginfo_extension"
+        value: .plist
+    - default_catalog:
+        key: "default_catalog"
+        value: "{{ munki_default_catalog }}"
