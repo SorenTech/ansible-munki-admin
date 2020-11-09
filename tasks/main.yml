@@ -3,6 +3,9 @@
 - hosts: all
 
   tasks:
+    - import_tasks: python-crypto.yml
+      when: always
+
     - import_tasks: install.yml
       when: always
 
