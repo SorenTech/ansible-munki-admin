@@ -1,28 +1,34 @@
 ---
-- name: Install Munkitools
-  command: autopkg install munki.install
-  become: yes
 
 - name: Clone Repo
   git_clone:
-    src: '{{ munkitools_repo_url }}'
-    dest: '/Users/Shared/munki_repo'
+    src: "{{ munkitools_repo_url }}"
+    dest: "{{ munki_repo_loc }}" 
     when: munkitools_existing_repo
 
 - name: Create New Local Repo
   file:
-     path: '/Users/Shared/munki_repo/{{ item }}'
+     path: "{{ munki_repo_loc }}/{{ item }}"
      state: directory
+     owner: "{{ munki_admin_user }}"
      mode: a+rX
      when: not munkitools_existing_repo
-   loop:
+  with_items:
        - catalogs
        - icons
        - manifests
        - pkgs
        - pkgsinfo
 
-- name: Start Apache
-  command:
-    cmd: apachectl start
-    become: yes
+- name: Prep repo directories for syncing to cloud
+  file:
+    path: "{{ munki_repo_loc }}/{{ item }}"
+    state: file
+    owner: "{{ munki_admin_user }}"
+    when: not munkitools_existing_repo
+  with_items:
+    - catalogs/.miac
+    - icons/.miac
+    - manifests/.miac
+    - pkgs/.miac
+    -pkgsinfo/.miac
