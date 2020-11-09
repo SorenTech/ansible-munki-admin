@@ -1,0 +1,25 @@
+---
+
+- name: Install AWS-CLI
+  community.general.homebrew:
+    name: awscli
+    state: latest
+    update_homebrew: yes
+
+- name: Install AutoPkgr and MunkiAdmin
+  shell:
+    cmd: autopkg make-override {{ item }}.install 
+    cmd: autopkg run local.install.{{ item }}
+  loop:
+    - AutoPkgr
+    - MunkiAdmin
+
+- name: Configure AutoPkgr
+  file:
+    path: "{{ user_home }}"/Library/Application Support/AutoPkgr"
+    state: directory
+
+- name: Create AutoPkgr Recipe Lists
+  shell:
+    cmd: ls -A "{{ user_home }}/Library/AutoPkg/Cache" | grep -v plist | grep -v MakeCatalogs | grep -v AutoPkgr > "{{ user_home }}/Library/Application Support/AutoPkgr/recipe_list.txt"
+    cmd: ls -A "{{ user_home }}/Library/AutoPkg/Cache" | grep MakeCatalogs >> "{{ user_home }}/Library/Application Support/AutoPkgr/recipe_list.txt"
