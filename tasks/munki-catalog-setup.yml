@@ -1,0 +1,18 @@
+---
+
+- name: Munki Make Catalogs
+  - command: /usr/local/munki/makecatalogs {{ munki_repo_loc }}
+
+- name: Create Site Default Manifest
+  - command: /usr/local/munki/manifestutil new-manifest site_default
+
+- name: Add Default Catalog to Default Manifest
+  - command: /usr/local/munki/manifestutil add-catalog {{ munki_default_catalog }} --manifest site_default
+
+- name: Identify Packages for Default Catalog
+  - command: /usr/local/munki/manifestutil list-catalog-items {{ munki_default_catalog }}
+    register: packages_for_catalog
+
+- name: Add Packages to Default Catalog
+  - command: /usr/local/munki/manifestutil add-pkg {{ item }} --manifest site_default
+  loop: {{ packages_for_catalog }}
