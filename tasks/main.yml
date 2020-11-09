@@ -9,7 +9,7 @@
     - import_tasks: setup-munki.yml
       when: always
 
-    - import_tasks: setup-autopk.yml
+    - import_tasks: setup-autopkg.yml
       when: "{{ is_munki_admin == true }}"
 
     - import_tasks: munki-catalog-setup.yml

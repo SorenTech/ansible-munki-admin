@@ -1,10 +1,10 @@
 ---
 
 - name: Clone Repo
-  git_clone:
+  git:
     src: "{{ munkitools_repo_url }}"
     dest: "{{ munki_repo_loc }}" 
-    when: munkitools_existing_repo
+    when: "{{ munkitools_existing_repo == true }}"
 
 - name: Create New Local Repo
   file:
@@ -13,7 +13,7 @@
      owner: "{{ munki_admin_user }}"
      mode: a+rX
      when: not munkitools_existing_repo
-  with_items:
+  loop:
        - catalogs
        - icons
        - manifests
@@ -26,7 +26,7 @@
     state: file
     owner: "{{ munki_admin_user }}"
     when: not munkitools_existing_repo
-  with_items:
+  loop:
     - catalogs/.miac
     - icons/.miac
     - manifests/.miac
@@ -39,7 +39,7 @@
     key: "{{ item.key }}"
     type: string
     value: "{{ item.value }}"
-  with-items:
+  loop:
     - editor:
         key: "editor"
         value: "{{ munki_editor }}"

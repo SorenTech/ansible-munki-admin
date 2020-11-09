@@ -1,0 +1,24 @@
+---
+
+- name: Set-up AutoPkg for use with Munki
+  community.general.osx_defaults:
+    domain: com.github.autopkg
+    key: MUNKI_REPO
+    type: string
+    value: "{{ munki_repo_loc }}"
+
+- name: Add AutoPkg Repos
+  command:
+    cmd: autopkg add {{ autopkg_repos }}
+
+- name: Update AutoPkg Repos
+  command:
+    cmd: autopkg repo-update {{ autopkg_repos }}
+
+- name: Copy AutoPkg preferences for Admin User
+  command:
+    cmd: plutil -convert xml1 ~/Library/Preferences/com.googlecode.munki.munkiimport.plist
+
+- name: Add AutoPkg Packages
+  shell: autopkg make-override {{ item }} && autopkg update-trust-info {{ item }} && autopkg run {{ item }}
+  loop: "{{ autopkg_packages }}"
