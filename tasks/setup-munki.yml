@@ -31,7 +31,7 @@
     - icons/.miac
     - manifests/.miac
     - pkgs/.miac
-    -pkgsinfo/.miac
+    - pkgsinfo/.miac
 
 - name: Set Munki System Settings
   community.general.osx_defaults:
