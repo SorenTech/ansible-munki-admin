@@ -9,4 +9,4 @@ munki_editor: "emacs"
 munki_default_catalog: "Production"
 autopkg_repos: "recipes"
 autopkg_packages: "Firefox.munki"
-
+is_munki_admin: true
