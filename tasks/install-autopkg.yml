@@ -1,0 +1,25 @@
+---
+
+- name: Get latest release metadata for AutoPkg
+  vars:
+    autopkg_latest_meta: "{{ lookup('url', 'https://api.github.com/repos/autopkg/autopkg/releases/latest') }}"
+
+- name: Get latest release download url for AutoPkg
+  vars:
+    autopkg_release_url: "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}"
+
+- name: Download latest AutoPkg release
+  get_url:
+    url: "{{ autopkg_release_url }}"
+    dest: "{{ user_home }}/autopkg-latest.pkg"
+
+- name: Install AutoPkg
+  shell:
+    cmd: installer -verboseR -pkg {{ user_home }}/autopkg-latest.pkg -target /
+    become: yes
+
+- name: Clean-up Installer Package
+  shell:
+    cmd: rm {{ user_home }}/autopkg-latest.pkg
+
+
