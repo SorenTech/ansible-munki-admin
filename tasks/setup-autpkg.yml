@@ -1,27 +1,26 @@
---
+---
 
-- name: Get AutoPkg Release Info
-  get_url:
-    url: https://api.github.com/repos/autopkg/autopkg/releases/latest
-    register: release_info
+- name: Set-up AutoPkg for use with Munki
+  community.general.osx_defaults:
+    domain: com.github.autopkg
+    key: MUNKI_REPO
+    type: string
+    value: "{{ munki_repo_loc }}"
 
-- set_fact:
-    release_json: "{{ release_info | from_json }}"
+- name: Add AutoPkg Repos
+  shell:
+    cmd: autopkg add {{ autopkg_repos }}
 
-- name: Download AutoPkg Release
-  get_url:
-    url: "{{ release_url }}"
-    with_dict: release_json.assetts.browser_download_url
-    dest: ~/Downloads/autopkg-latest.pkg
+- name: Update AutoPkg Repos
+  shell:
+    cmd: autopkg repo-update {{ autopkg_repos }}
 
-- name: Install AutoPkg
-  command: installer -pkg "~/Downloads/autopkg-latest.pkg" -target /
-  become: yes
+- name: Copy AutoPkg preferences for Admin User
+  shell:
+    cmd: plutil -convert xml1 ~/Library/Preferences/com.googlecode.munki.munkiimport.plist
 
-- name: Cleanup AutoPkg
-  file:
-    path: ~/Downloads/autopkg-latest.pkg
-    state: absent
-
-- name: Add base repo
-  command: autopkg repo-add recipes
+- name: Add AutoPkg Packages
+  shell:
+    cmd: autopkg make-override {{ autopkg_packages }}
+    cmd: autopkg update-trust-info {{ autopkg_packages }}
+    cmd: run {{ autopkg_packages }}
