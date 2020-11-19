@@ -6,7 +6,7 @@ munkitools_repo_url: ""
 munki_repo_loc: "/Users/Shared/munki_repo"
 munki_admin_user: "{{ lookup('env', 'USR') }}"
 munki_editor: "emacs"
-munki_default_catalog: "Production"
-autopkg_repos: "recipes"
-autopkg_packages: "Firefox.munki"
+munki_default_catalog: "testing"
+autopkg_repos: []
+autopkg_packages: []
 is_munki_admin: true
