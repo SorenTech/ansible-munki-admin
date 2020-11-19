@@ -1,5 +1,11 @@
 ---
 - hosts: localhost
+
+  vars:
+    autopkg_repos:
+      - recipes
+    autopkg_packages:
+      - Firefox.munki 
+
   roles:
-    - ansible-role-munkitools
-  
+    - apmarshall.ansible_role_munki_in_a_box
