@@ -50,3 +50,4 @@ Other Variables that Might Be Useful:
 ## Acknowledgments
 
 - [Tom Bridge](https://github.com/tbridge): Inspiration and provided the shell scripts which formed the basis for the underlying logic and structure
+- [Jeff Geerling](https://github.com/geerlingguy): For providing such clear templates of how to use Ansible, including for the purposes of this role using GitHub actions for CI
