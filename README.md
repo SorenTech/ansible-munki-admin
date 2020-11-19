@@ -18,7 +18,8 @@ Include in a `requirements.yml`:
     
 ## Testing
 
-To-Do 
+Syntax Check: `ansible-playbook tests/test.yml --syntax-check`
+Run the Test Playbook: `ansible-playbook tests/test.yml`
 
 ## Usage
 
