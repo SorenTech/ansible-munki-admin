@@ -32,7 +32,6 @@
     become: yes
   loop:
     - autopkg
-      when: "{{ is_munki_admin == true }}"
     - munki
 
 - name: Clean-up Installer Packages
