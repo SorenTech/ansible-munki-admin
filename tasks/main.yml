@@ -1,19 +1,18 @@
 ---
-  tasks:
-    - import_tasks: python-crypto.yml
-      when: always
+  - import_tasks: python-crypto.yml
+    when: always
 
-    - import_tasks: install.yml
-      when: always
+  - import_tasks: install.yml
+    when: always
 
-    - import_tasks: setup-munki.yml
-      when: always
+  - import_tasks: setup-munki.yml
+    when: always
 
-    - import_tasks: setup-autopkg.yml
-      when: "{{ is_munki_admin == true }}"
+  - import_tasks: setup-autopkg.yml
+    when: "{{ is_munki_admin == true }}"
 
-    - import_tasks: munki-catalog-setup.yml
-      when: always
+  - import_tasks: munki-catalog-setup.yml
+    when: always
 
-    - import_tasks: install-admin-tools.yml
-      when: "{{ is_munki_admin == true }}"
+  - import_tasks: install-admin-tools.yml
+    when: "{{ is_munki_admin == true }}"
