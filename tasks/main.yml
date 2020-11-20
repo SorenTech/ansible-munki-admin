@@ -1,6 +1,6 @@
 ---
   - import_tasks: python-crypto.yml
-    when: always
+    when: "{{ is_munki_admin == true }}"
 
   - import_tasks: install.yml
     when: always
