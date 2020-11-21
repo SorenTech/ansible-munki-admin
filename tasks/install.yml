@@ -8,7 +8,7 @@
     - autopkg:
         name: autopkg
         path: autopkg/autopkg
-        when: "{{ is_munki_admin == true }}"
+        when: is_munki_admin == true
     - munki:
         name: munki
         path: munki/munki
@@ -21,7 +21,7 @@
     - autopkg:
         url: "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}"
         name: autopkg
-        when: "{{ is_munki_admin == true }}"
+        when: is_munki_admin == true
     - munki:
         url: "{{ munki_latest_meta.assets.browser_download_url | from_json }}"
         name: munki
