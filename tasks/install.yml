@@ -1,43 +1,37 @@
 ---
 
-- name: Get latest release metadata for AutoPkg and MunkiTools
-  uri:
-    url: https://api.gitbub.com/repos/{{ item.path }}/releases/latest
-    register: "{{ item.name }}_latest_meta"
-  loop:
+vars:
+  core_packages:
     - autopkg:
         name: autopkg
         path: autopkg/autopkg
+        file_dest: "{{ user_home }}/autopkg-latest.pkg"
         when: is_munki_admin == true
     - munki:
         name: munki
         path: munki/munki
+        file_dest: "{{ user_home }}/munki-latest.pkg"
+
+tasks:
+- name: Get latest release metadata for AutoPkg and MunkiTools
+  uri:
+    url: https://api.gitbub.com/repos/{{ core_packages.path }}/releases/latest
+    register: "{{ core_packages.name }}_latest_meta"
 
 - name: Download latest AutoPkg and Munki releases
   get_url:
-    url: "{{ item.url }}"
-    dest: "{{ user_home }}/{{ item.name }}-latest.pkg"
+    url: "{{ item }}"
+    dest: "{{ core_packages.file_dest }}"
   loop:
-    - autopkg:
-        url: "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}"
-        name: autopkg
-        when: is_munki_admin == true
-    - munki:
-        url: "{{ munki_latest_meta.assets.browser_download_url | from_json }}"
-        name: munki
+    - "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}"
+    - "{{ munki_latest_meta.assets.browser_download_url | from_json }}"
 
 - name: Install AutoPkg and Munki 
   command:
-    cmd: installer -verboseR -pkg {{ user_home }}/{{ item }}-latest.pkg -target /
+    cmd: installer -verboseR -pkg {{ core_packages.file_dest }} 
     become: yes
-  loop:
-    - autopkg
-    - munki
 
 - name: Clean-up Installer Packages
   file:
     state: absent
-    path: "{{ user_home }}/{{ name }}-latest.pkg"
-  loop:
-    - autopkg
-    - munki 
+    path: "{{ core_packages.file_dest }}" 
