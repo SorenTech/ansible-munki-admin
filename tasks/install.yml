@@ -19,7 +19,7 @@
     dest: "{{ user_home }}/{{ item.name }}-latest.pkg"
   loop:
     - autopkg:
-        url: "{{ autopkg_latest_mega.assets.browser_download_url | from_json }}"
+        url: "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}"
         name: autopkg
         when: "{{ is_munki_admin == true }}"
     - munki:
