@@ -10,3 +10,16 @@ munki_default_catalog: "testing"
 autopkg_repos: []
 autopkg_packages: []
 is_munki_admin: true
+
+core_packages:
+  - autopkg:
+      name: autopkg
+      path: autopkg/autopkg
+      file_src: "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}"
+      file_dest: "{{ user_home }}/autopkg-latest.pkg"
+      when: is_munki_admin == true
+  - munki:
+      name: munki
+      path: munki/munki
+      file_src: "{{ munki_latest_meta.assets.browser_download_url | from_josn }}"
+      file_dest: "{{ user_home }}/munki-latest.pkg"
