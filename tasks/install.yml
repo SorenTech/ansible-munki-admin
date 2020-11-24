@@ -5,11 +5,13 @@ vars:
     - autopkg:
         name: autopkg
         path: autopkg/autopkg
+        file_src: "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}"
         file_dest: "{{ user_home }}/autopkg-latest.pkg"
         when: is_munki_admin == true
     - munki:
         name: munki
         path: munki/munki
+        file_src: "{{ munki_latest_meta.assets.browser_download_url | from_json }}"
         file_dest: "{{ user_home }}/munki-latest.pkg"
 
 tasks:
@@ -20,11 +22,8 @@ tasks:
 
 - name: Download latest AutoPkg and Munki releases
   get_url:
-    url: "{{ item }}"
+    url: "{{ core_packages.file_src }}"
     dest: "{{ core_packages.file_dest }}"
-  loop:
-    - "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}"
-    - "{{ munki_latest_meta.assets.browser_download_url | from_json }}"
 
 - name: Install AutoPkg and Munki 
   command:
