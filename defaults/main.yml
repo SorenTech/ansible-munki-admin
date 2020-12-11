@@ -12,5 +12,5 @@ autopkg_packages: []
 is_munki_admin: true
 
 core_packages:
-  - {name: autopkg, path: autopkg/autopkg, file_src: "{{ autopkg_latest_meta.assets.browser_download_url | from_json }}", file_dest: "{{ user_home }}/autopkg-latest.pkg", when: is_munki_admin == true}
-  - {name: munki,path: munki/munki, file_src: "{{ munki_latest_meta.assets.browser_download_url | from_josn }}", file_dest: "{{ user_home }}/munki-latest.pkg"}
+  - {name: autopkg, path: autopkg/autopkg, when: is_munki_admin == true}
+  - {name: munki,path: munki/munki}
