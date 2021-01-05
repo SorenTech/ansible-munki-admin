@@ -13,4 +13,4 @@ is_munki_admin: true
 
 core_packages:
   - {name: autopkg, path: autopkg/autopkg, when: is_munki_admin == true}
-  - {name: munki,path: munki/munki}
+  - {name: munki, path: munki/munki}
