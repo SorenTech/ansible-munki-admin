@@ -2,7 +2,7 @@
   - import_tasks: python-crypto.yml
     when: is_munki_admin == true
 
-  - import_tasks: install.yml
+  - include_tasks: install.yml
     with_items:
       - {name: munki, path: munki/munki}
       - {name: autopkg, path: autopkg/autopkg, when: is_munki_admin == true}
