@@ -1,22 +1,18 @@
 ---
+  - import_tasks: python-crypto.yml
+    when: is_munki_admin == true
 
-- hosts: all
+  - include_tasks: install.yml
+    with_items:
+      - {name: munki, path: munki/munki}
+      - {name: autopkg, path: autopkg/autopkg, when: is_munki_admin == true}
 
-  tasks:
-    - import_tasks: python-crypto.yml
-      when: always
+  - import_tasks: setup-munki.yml
 
-    - import_tasks: install.yml
-      when: always
+  - import_tasks: setup-autopkg.yml
+    when: is_munki_admin == true
 
-    - import_tasks: setup-munki.yml
-      when: always
+  - import_tasks: munki-catalog-setup.yml
 
-    - import_tasks: setup-autopkg.yml
-      when: "{{ is_munki_admin == true }}"
-
-    - import_tasks: munki-catalog-setup.yml
-      when: always
-
-    - import_tasks: install-admin-tools.yml
-      when: "{{ is_munki_admin == true }}"
+  - import_tasks: install-admin-tools.yml
+    when: is_munki_admin == true
